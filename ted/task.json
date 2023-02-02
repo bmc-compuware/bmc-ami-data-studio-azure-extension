@@ -1,0 +1,551 @@
+{
+    "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+    "id": "2314e4e1-ca88-4155-8b1a-fa6df6924a18",
+    "name": "bmc-ted-extension",
+    "friendlyName": "BMC AMI DevX Data Studio",
+    "description": "BMC AMI DevX Data Studio is a data management product with automation to speed data extraction, privatization and loading. The extension allows Azure Devops users to run ted specifications.",
+    "helpMarkDown": "",
+    "category": "Utility",
+    "author": "BMC Software",
+    "version": {
+        "Major": 1,
+        "Minor": 0,
+        "Patch": 0
+    },
+    "instanceNameFormat": "BMC AMI DevX Data Studio",
+    "groups": [
+        {
+            "name": "specification",
+            "displayName": "Specification",
+            "isExpanded": true
+        },
+        {
+            "name": "ces",
+            "displayName": "CES",
+            "isExpanded": false
+        },
+        {
+            "name": "commManager",
+            "displayName": "Communication Manager",
+            "isExpanded": false
+        },
+        {
+            "name": "executionServer",
+            "displayName": "Execution Server",
+            "isExpanded": false
+        },
+        {
+            "name": "executionHost",
+            "displayName": "Execution Host",
+            "isExpanded": false
+        },
+        {
+            "name": "jobCardPreferences",
+            "displayName": "Jobcard Preferences",
+            "isExpanded": false
+        },
+        {
+            "name": "dataSetNamingPreferences",
+            "displayName": "Dataset Naming Preferences",
+            "isExpanded": false
+        },
+        {
+            "name": "dataPrivacyOverride",
+            "displayName": "Data Privacy Overrides",
+            "isExpanded": false
+        },
+        {
+            "name": "haltPipeline",
+            "displayName": "Halt pipeline",
+            "isExpanded": false
+        }
+
+    ],
+    "inputs": [
+        {
+            "name": "windowsTopazWorkbenchCliHome",
+            "type": "pickList",
+            "label": "Windows Workbench CLI Home",
+            "required": true,
+            "defaultValue": "",
+            "helpMarkDown": "This field specifies the path of installed Workbench CLI. This can be configured in the Common Configuration Extension."
+        },
+        {
+            "name": "linuxTopazWorkbenchCliHome",
+            "type": "pickList",
+            "label": "Linux  Workbench CLI Home",
+            "required": true,
+            "defaultValue": "",
+            "helpMarkDown": "This field specifies the path of installed  Workbench CLI. This can be configured in the Common Configuration Extension."
+        },
+        {
+            "name": "repositoryName",
+            "type": "string",
+            "label": "Repository Name",
+            "defaultValue": "",
+            "required": true,
+            "groupName": "specification",
+            "helpMarkDown": "The name of the File-AID EX repository, which houses the required EX specifications that are to be executed.\n\n Optional? No \n\n Can be defined in execution Context? No"
+        },
+        {
+            "name": "resultRepositoryName",
+            "type": "string",
+            "label": "Results Repository Name",
+            "defaultValue": "",
+            "required": false,
+			"groupName": "specification",
+            "helpMarkDown": "The repository where Compare Pro execution results will be stored. Only applicable to comparePro specifications.\n\n Optional? Yes, defaults to the specification repository if not specified.\n\nCan be defined in execution Context? No"
+        },
+        {
+            "name": "executionOptions",
+            "type": "pickList",
+            "label": "Execution Type",
+			"options": {
+                "singleExecution": "Single Specification Execution",
+                "multipleLine": "Multi Specification Execution"
+            },
+            "defaultValue": "singleExecution",
+            "groupName": "specification",
+            "required": true,
+            "helpMarkDown": "Choose an option"
+        },
+        {
+            "name": "specificationName",
+            "type": "string",
+            "label": "Specification Name",
+            "groupName": "specification",
+            "required": false,
+            "visibleRule": "executionOptions == singleExecution",
+            "helpMarkDown": "The name of the specification that is to be executed. Required if single specification execution is selected.Optional? No, mandatory if single specification execution is selected."
+        },
+        {
+            "name": "specificationType",
+            "type": "pickList",
+            "label": "Specification Type",
+			"options": {
+                "Compare": "Compare Pro",
+                "Convert": "Converter Pro",
+                "ExSuite": "Execution Suite",
+                "Extract": "Related Extract",
+                "Load": "Related Load"
+            },
+            "defaultValue": "",
+            "required": false,
+            "visibleRule": "executionOptions == singleExecution",
+            "groupName": "specification",
+            "helpMarkDown": "The type of the specification that is to be executed. Optional? No, mandatory if single specification execution is selected."
+        },
+        {
+            "name": "multiSpecificationExecution",
+            "type": "multiLine",
+            "label": "Specification Name",
+            "required": true,
+            "groupName": "specification",
+            "visibleRule": "executionOptions == multipleLine",
+            "helpMarkDown": "The name of the specification that is to be executed. Required if single specification execution is selected.Optional? No, mandatory if single specification execution is selected."
+        }
+         ,
+        {
+            "name": "exitOnFailure",
+            "type": "boolean",
+            "label": "Exit on Failure",
+            "defaultValue": "false",
+            "required": false,
+            "groupName": "specification",
+            "visibleRule": "executionOptions == multipleLine",
+            "helpMarkDown": "Flag to denote if it is preferred to stop the continued execution of specifications after a execution failure, in case of multi-specification execution.Optional? Yes, defaulted to true if not defined"
+           
+        },
+        {
+            "name": "executionContext",
+            "defaultValue": "",
+            "type": "string",
+            "label": "Execution Context",
+            "required": false,
+            "groupName": "specification",
+            "helpMarkDown": "TThe name of the execution context file. If the file is present at /WorkbenchCLI/EnterpriseData, the name of the file would suffice, if at a different location on the machine supply the\n\n full path with the file name. If a value for a certain argument is defined in the context file and is also passed as an argument, the value passed with the command will take precedence. To know which all parameters can be specified via the context file, view the template provided at /WorkbenchCLI/EnterpriseData named executioncontext_template.properties. Multiple execution contexts can be created as required by copying the template.Optional? Yes, if this is not provided all other mandatory parameters have to be defined on the pipeline definition."
+        },
+        {
+            "name": "executionTimeout",
+            "type": "string",
+            "label": "Execution Timeout",
+            "required": false,
+            "defaultValue": "0",
+            "groupName": "specification",
+            "helpMarkDown": "The execution timeout in seconds. The default if not defined is 20 seconds.Optional? Yes \n\n Can be defined in execution Context? Yes            "
+        },
+        {
+            "name": "defineCes",
+            "type": "boolean",
+            "label": "Define CES",
+            "defaultValue": "false",
+            "groupName": "ces",
+            "required": false,
+            "helpMarkDown": "Flag to denote if it is preferred to stop the continued execution of specifications after a execution failure, in case of multi-specification execution.Optional? Yes, defaulted to true if not defined"
+           
+        },
+        {
+            "name": "cesUri",
+            "type": "pickList",
+            "label": "Host Connection",
+            "defaultValue": "",
+            "groupName": "ces",
+            "visibleRule": "defineCes == true",
+		    "required": true,
+            "helpMarkDown": "This field specifies the host connection to use to submit a measurement.Host connections can be configured in the Common Configuration Extension."
+        },
+        {
+            "name": "useCloudCes",
+            "type": "boolean",
+            "label": "Use Cloud CES",
+            "defaultValue": "false",
+            "groupName": "ces",
+            "required": false,
+            "visibleRule": "defineCes == true",
+            "helpMarkDown": "Flag to denote if cloud CES should be used. \n\nOptional? No"
+           
+        },
+        {
+            "name": "customerNumber",
+            "type": "string",
+            "label": "Customer Number",
+            "required": false,
+            "groupName": "ces",
+            "visibleRule": "useCloudCes == true",
+            "helpMarkDown": "The customer number, in case the cloud CES is chosen to be used. Please contact BMC customer support if you need help with this information.\n\n Optional? Required for cloud CES."
+        },
+        {
+            "name": "siteID",
+            "type": "string",
+            "label": "Site ID",
+            "groupName": "ces",
+            "visibleRule": "useCloudCes == true",
+            "required": false,
+            "helpMarkDown": "The Site ID, in case the cloud CES is chosen to be used. Please contact BMC customer support if you need help with this information.\n\nOptional? Required for cloud CES."
+        }
+        ,
+        {
+            "name": "defineCommManager",
+            "type": "boolean",
+            "label": "Define Communication Manager",
+            "defaultValue": "false",
+            "required": false,
+            "groupName": "commManager",
+            "helpMarkDown": "Flag to denote if it is preferred to stop the continued execution of specifications after a execution failure, in case of multi-specification execution.Optional? Yes, defaulted to true if not defined"
+           
+        },
+        {
+            "name": "host",
+            "type": "string",
+            "label": "Host",
+            "defaultValue": "",
+            "required": false,
+            "visibleRule": "defineCommManager == true",
+            "groupName": "commManager",
+            "helpMarkDown": "The host name or ip of the machine where the communication manager is running. The File-AID Ex repository containing the specifications that needs to be executed should be configured on this communication manager.\n\nOptional? No\n\nCan be defined in execution Context? Yes"
+           
+        }
+        ,{
+            "name": "port",
+            "type": "string",
+            "label": "Port",
+            "defaultValue": "",
+            "visibleRule": "defineCommManager == true",
+            "required": false,
+            "groupName": "commManager",
+            "helpMarkDown": "The port on which the communication manager is running. on the specified host.\n\nOptional? No\n\nCan be defined in execution Context? Yes"
+           
+        },
+
+        {
+            "name": "defineExecServer",
+            "type": "boolean",
+            "label": "Define Execution Server",
+            "defaultValue": "false",
+            "required": false,
+            "groupName": "executionServer",
+            "helpMarkDown": "Flag to denote if it is preferred to stop the continued execution of specifications after a execution failure, in case of multi-specification execution.Optional? Yes, defaulted to true if not defined"
+           
+        },
+        {
+            "name": "execServerHost",
+            "type": "string",
+            "label": "Host",
+            "visibleRule": "defineExecServer == true",
+            "defaultValue": "",
+            "required": false,
+            "groupName": "executionServer",
+            "helpMarkDown": "The host name or ip of the machine which the execution server where the EX specifications should be executed, is installed.\n\nOptional? Required for executing EX specifications.\n\nCan be defined in execution Context? Yes"
+           
+        },
+        {
+            "name": "execServerPort",
+            "type": "string",
+            "label": "Port",
+            "visibleRule": "defineExecServer == true",
+            "defaultValue": "",
+            "required": false,
+            "groupName": "executionServer",
+            "helpMarkDown": "The host name or ip of the machine which the execution server where the EX specifications should be executed, is installed.\n\nOptional? Required for executing EX specifications.\n\nCan be defined in execution Context? Yes"
+           
+        },
+        
+        {
+            "name": "defineExecHost",
+            "type": "boolean",
+            "label": "Define Execution Host",
+            "defaultValue": "false",
+            "required": false,
+            "groupName": "executionHost",
+            "helpMarkDown": "The execution host and port where RDX specifications should be executed.\n\nOptional? Required for executing RDX specifications.\n\nCan be defined in execution Context? Yes"
+           
+        },
+        {
+            "name": "execConnectionId",
+            "type": "pickList",
+            "label": "Host Connection",
+            "visibleRule": "defineExecHost == true",
+            "defaultValue": "",
+            "groupName": "executionHost",
+		    "required": true,
+            "helpMarkDown": "This field specifies the host connection to use to submit a measurement.Host connections can be configured in the Common Configuration Extension."
+        },
+        {
+            "name": "useCredentials",
+            "type": "boolean",
+            "label": "Use credentials for authentication",
+            "defaultValue": "false",
+            "visibleRule": "defineExecHost == true",
+            "required": false,
+            "groupName": "executionHost",
+            "helpMarkDown": "The execution host and port where RDX specifications should be executed.\n\nOptional? Required for executing RDX specifications.\n\nCan be defined in execution Context? Yes"
+           
+        },
+        {
+            "name": "exexHostCredentials",
+            "type": "string",
+            "label": "Credentials",
+            "defaultValue": "",
+            "visibleRule": "useCredentials == true",
+            "required": false,
+            "groupName": "executionHost",
+            "helpMarkDown": "The credentials name from Azure Key Vault for the selected execution host.\n\nOptional? Required for executing RDX specifications.\n\n Can be defined in execution Context? No."
+           
+        },
+        {
+            "name": "defineJobCardPref",
+            "type": "boolean",
+            "label": "Define Jobcard Preferences",
+            "defaultValue": "false",
+            "required": false,
+            "groupName": "jobCardPreferences",
+            "helpMarkDown": ""
+            
+        },
+        {
+            "name": "jobCardLine1",
+            "type": "string",
+            "label": "Job Card Line 1",
+            "defaultValue": "",
+            "required": false,
+            "visibleRule": "defineJobCardPref == true",
+            "groupName": "jobCardPreferences",
+            "helpMarkDown": "The JCL Jobcard's line 1, applicable only to RDX execution.\n\n Optional? Yes\n\n Can be defined in execution Context? Yes"
+           
+        },
+        {
+            "name": "jobCardLine2",
+            "type": "string",
+            "label": "Job Card Line 2",
+            "defaultValue": "",
+            "required": false,
+            "visibleRule": "defineJobCardPref == true",
+            "groupName": "jobCardPreferences",
+            "helpMarkDown": "The JCL Jobcard's line 2, applicable only to RDX execution.\n\n Optional? Yes\n\n Can be defined in execution Context? Yes"
+           
+        },
+        {
+            "name": "jobCardLine3",
+            "type": "string",
+            "label": "Job Card Line 3",
+            "defaultValue": "",
+            "visibleRule": "defineJobCardPref == true",
+            "required": false,
+            "groupName": "jobCardPreferences",
+            "helpMarkDown": "The JCL Jobcard's line 3, applicable only to RDX execution.\n\n Optional? Yes\n\n Can be defined in execution Context? Yes"
+           
+        },
+        {
+            "name": "jobCardLine4",
+            "type": "string",
+            "label": "Job Card Line 4",
+            "defaultValue": "",
+            "visibleRule": "defineJobCardPref == true",
+            "required": false,
+            "groupName": "jobCardPreferences",
+            "helpMarkDown": "The JCL Jobcard's line 4, applicable only to RDX execution.\n\n Optional? Yes\n\n Can be defined in execution Context? Yes"
+           
+        },
+        {
+            "name": "jobCardLine5",
+            "type": "string",
+            "label": "Job Card Line 5",
+            "defaultValue": "",
+            "visibleRule": "defineJobCardPref == true",
+            "required": false,
+            "groupName": "jobCardPreferences",
+            "helpMarkDown": "The JCL Jobcard's line 5, applicable only to RDX execution.\n\n Optional? Yes\n\n Can be defined in execution Context? Yes"
+           
+        },
+        {
+            "name": "dataSetNamingPref",
+            "type": "boolean",
+            "label": "Dataset Naming Preferences",
+            "defaultValue": "false",
+            "required": false,
+            "groupName": "dataSetNamingPreferences",
+            "helpMarkDown": ""
+            
+        },
+        {
+            "name": "dataSetHighQualifier",
+            "type": "string",
+            "label": "Dataset High Level Qualifier",
+            "defaultValue": "",
+            "visibleRule": "dataSetNamingPref == true",
+            "required": false,
+            "groupName": "dataSetNamingPreferences",
+            "helpMarkDown": "The dataset high level qualifier to be used. Applicable only for RDX execution.\n\n Optional?Yes \n\n Can be defined in execution Context? Yes"
+            
+        },
+        {
+            "name": "tempDatasetPrefix",
+            "type": "string",
+            "label": "Temporary Dataset Prefix",
+            "defaultValue": "",
+            "visibleRule": "dataSetNamingPref == true",
+            "required": false,
+            "groupName": "dataSetNamingPreferences",
+            "helpMarkDown": "The prefix to be used for temporary datasets. Applicable only for RDX execution.\n\nOptional? Yes \n\nCan be defined in execution Context? Yes"
+            
+        },
+        {
+            "name": "tempDatasetSuffix",
+            "type": "string",
+            "label": "Temporary Dataset Suffix",
+            "defaultValue": "",
+            "visibleRule": "dataSetNamingPref == true",
+            "required": false,
+            "groupName": "dataSetNamingPreferences",
+            "helpMarkDown": "The suffix to be used for temporary datasets. Applicable only for RDX execution.\n\n Optional? Yes\n\n Can be defined in execution Context? Yes"
+            
+        },
+        {
+            "name": "dataPrivacyOverride",
+            "type": "boolean",
+            "label": "Define Data Privacy Overrides",
+            "defaultValue": "",
+            "required": false,
+            "groupName": "dataPrivacyOverride",
+            "helpMarkDown": ""
+            
+        },
+        {
+            "name": "fADEbUG",
+            "type": "string",
+            "label": "FADEBUG",
+            "visibleRule": "dataPrivacyOverride == true",
+            "defaultValue": "",
+            "required": false,
+            "groupName": "dataPrivacyOverride",
+            "helpMarkDown": "The data privacy override FADEBUG, that defines the logging information for the File-AID Rules Engine. Only applicable for RDX Extract executions.\n\n Optional? Yes \n\n Can be defined in execution Context? Yes"
+            
+        },
+        {
+            "name": "fAEXpATH",
+            "type": "string",
+            "label": "FAEXPATH",
+            "defaultValue": "",
+            "visibleRule": "dataPrivacyOverride == true",
+            "required": false,
+            "groupName": "dataPrivacyOverride",
+            "helpMarkDown": "The data privacy override FAEXPATH, that defines the path for File-AID Rules Engine location. Only applicable for RDX Extract executions. \n\n Optional? Yes \n\n Can be defined in execution Context? Yes ."
+            
+        },
+        {
+            "name": "fAIPaDDR",
+            "type": "string",
+            "label": "FAIPADDR",
+            "defaultValue": "",
+            "visibleRule": "dataPrivacyOverride == true",
+            "required": false,
+            "groupName": "dataPrivacyOverride",
+            "helpMarkDown": "The data privacy override FAIPADDR, that provides the File-AID Services IP address and execution port.\n\n Optional? Yes\n\n Can be defined in execution Context? Yes"
+            
+        },
+        {
+            "name": "fAJoPTS",
+            "type": "string",
+            "label": "FAJOPTS",
+            "defaultValue": "",
+            "visibleRule": "dataPrivacyOverride == true",
+            "required": false,
+            "groupName": "dataPrivacyOverride",
+            "helpMarkDown": "The data privacy override FAJOPTS, that defines the Java options for the File-AID Rules Engine. \n\n Optional? Yes \n\n Can be defined in execution Context? Yes"
+            
+        },
+        {
+            "name": "fAJpATH",
+            "type": "string",
+            "label": "FAJPATH",
+            "defaultValue": "",
+            "visibleRule": "dataPrivacyOverride == true",
+            "required": false,
+            "groupName": "dataPrivacyOverride",
+            "helpMarkDown": "The data privacy override FAJAPTH, that defines the z/OS UNIX path for the Java Virtual Machine. \n\n Optional? Yes \n\n Can be defined in execution Context? Yes"
+            
+        },
+        {
+            "name": "haltPipeline",
+            "type": "boolean",
+            "label": "Should the pipeline execution be terminated if errors occur in the execution?",
+            "defaultValue": "true",
+            "required": false,
+            "groupName": "haltPipeline",
+            "helpMarkDown": ""
+            
+        }
+    ],
+	 "dataSourceBindings": [
+        {
+            "endpointId": "tfs:teamfoundation",
+            "target": "cesUri",
+            "endpointUrl": "{{endpoint.url}}/_apis/ExtensionManagement/InstalledExtensions/BMC/common-config-extension/Data/Scopes/Default/Current/Collections/%24settings/Documents/hostconnection",
+            "resultSelector": "jsonpath:$.value[*]",
+			"resultTemplate": "{\"Value\":\"{{{ces_url}}}\",\"DisplayValue\":\"{{{ces_url}}}\"}"
+        },
+        {
+            "endpointId": "tfs:teamfoundation",
+            "target": "execConnectionId",
+            "endpointUrl": "{{endpoint.url}}/_apis/ExtensionManagement/InstalledExtensions/BMC/common-config-extension/Data/Scopes/Default/Current/Collections/%24settings/Documents/hostconnection",
+            "resultSelector": "jsonpath:$.value[*]",
+			"resultTemplate": "{\"Value\":\"{{{host}}}#{{{protocol}}}#{{{code_page}}}\",\"DisplayValue\":\"{{{description}}}\"}"
+        },
+        {
+            "endpointId": "tfs:teamfoundation",
+            "target": "windowsTopazWorkbenchCliHome",
+            "endpointUrl": "{{endpoint.url}}/_apis/ExtensionManagement/InstalledExtensions/BMC/common-config-extension/Data/Scopes/Default/Current/Collections/$settings/Documents/windows_CLI",
+            "resultSelector": "jsonpath:$.value"
+        },
+        {
+            "endpointId": "tfs:teamfoundation",
+            "target": "linuxTopazWorkbenchCliHome",
+            "endpointUrl": "{{endpoint.url}}/_apis/ExtensionManagement/InstalledExtensions/BMC/common-config-extension/Data/Scopes/Default/Current/Collections/$settings/Documents/windows_CLI",
+            "resultSelector": "jsonpath:$.value"
+        }],	
+    "execution": {
+        "Node10": {
+            "target": "index.js"
+        }
+    }
+}

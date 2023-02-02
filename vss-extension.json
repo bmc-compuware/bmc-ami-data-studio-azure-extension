@@ -1,0 +1,70 @@
+{
+    "manifestVersion": 1,
+    "id": "bmc-ted-extension",
+    "name": "BMC AMI DevX Data Studio Extension",
+    "version": "1.0.0",
+    "publisher": "BMC",
+    "public":true,
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],    
+    "description": "BMC AMI DevX Data Studio is a data management product with automation to speed data extraction, privatization and loading. The extension allows Azure Devops Users to run ted specifications.",
+    "categories": [
+        "Azure Pipelines"
+    ],
+    "icons": {
+        "default": "images/BMC_AMI_DevX_Data_Studio.png"        
+    },"repository": {
+      "type": "git",
+      "uri": "https://github.com/bmc-compuware/bmc-compuware-strobe-measurement-azure-extension"
+  },
+ "links": {
+      "getstarted": {
+          "uri": "https://github.com/bmc-compuware/bmc-compuware-strobe-measurement-azure-extension/blob/master/readme.md"
+      },
+      "support": {
+          "uri": "https://support.bmc.com"     
+      },
+      "license":{
+          "uri":"https://github.com/bmc-compuware/bmc-compuware-strobe-measurement-azure-extension/blob/master/LICENSE"
+      }
+
+  },
+"content": {
+      "details": {
+          "path": "README.md"
+      },
+  "license": {
+          "path": "LICENSE"
+      }
+  
+  },
+ "tags": [
+      "BMC",
+      "Mainframe",
+      "Continuous Integration",
+      "Host Connections",
+      "BMC AMI DevX Data Studio",
+      "Data Extraction",
+      "privatization "
+  ],
+    "files": [
+        {
+            "path": "ted"
+        }
+    ],
+    "contributions": [
+        {
+            "id": "custom-build-release-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "ted"
+            }
+        }
+    ]
+}
