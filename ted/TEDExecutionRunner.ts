@@ -1,7 +1,7 @@
 import tl = require('azure-pipelines-task-lib/task');
 import { ToolRunner } from 'azure-pipelines-task-lib/toolrunner';
-import { TEDExecutionBuilder } from './TEDExecutionBuilder';
-import { ExecutionRunnerUtils } from './ExecutionRunnerUtils';
+import { TEDExecutionBuilder } from './tedExecutionBuilder';
+import { ExecutionRunnerUtils } from './executionRunnerUtils';
 import { UtilityFunctions } from './UtilityFunctions';
 import { spawn, exec } from 'child_process';
 var cliargList = require('./CliArguments');

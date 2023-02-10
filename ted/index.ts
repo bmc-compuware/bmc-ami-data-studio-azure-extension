@@ -1,5 +1,5 @@
 import tl = require('azure-pipelines-task-lib/task');
-import {TEDExecutionRunner} from './TEDExecutionRunner';
+import {TEDExecutionRunner} from './tedExecutionRunner';
 
 async function run() {
   try {

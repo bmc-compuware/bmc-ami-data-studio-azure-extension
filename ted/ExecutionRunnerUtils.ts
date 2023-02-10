@@ -2,7 +2,7 @@ import tl = require('azure-pipelines-task-lib/task');
 const fs = require('fs');
 var xml2js = require('xml2js');
 import { UtilityFunctions } from './UtilityFunctions';
-import { CliVersionUtils } from './CliVersionUtils';
+import { CliVersionUtils } from './cliVersionUtils';
 var comonConstant = require('./TEDConstants');
 const TTL_CLI_200903: string = "20.09.03";
 const TED_MINIMUM_CLI_VERSION: string = TTL_CLI_200903;
