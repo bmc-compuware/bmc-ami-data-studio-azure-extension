@@ -6,16 +6,16 @@ BMC AMI DevX Data Studio Extension is a data management product with automation 
 
 The following are required to use this extension:
 
--   Azure DevOps Server
+-   Azure Pipelines - in Azure DevOps Services or Azure DevOps Server
 -   Azure Key Vault Task
 -   BMC Common Configuration extension
 -   Workbench CLI. Refer to the [Workbench for Eclipse Install Guide](https://docs.bmc.com/docs/x/YE6wR) for instructions.
 -   BMC AMI DevX Data Studio license
 
-### Installing in an Azure DevOps Pipeline Instance
+### Installing in an Azure Pipelines - in Azure DevOps Services or Azure DevOps Server
 
 1.  Install the BMC AMI DevX Data Studio Extension according to the Azure DevOps instructions for installing extensions in pipeline.
-2.  Install the Workbench CLI on the Azure DevOps Server instances that will execute the extension. The Workbench CLI is available on the **Workbench for Eclipse** installation package. If you do not have the installation package, please  visit [https://support.bmc.com](https://support.bmc.com/). For Workbench CLI installation instructions, please refer to the [Workbench for Eclipse Install Guide](https://docs.bmc.com/docs/x/YE6wR).
+2.  Install the Workbench CLI on the Azure Pipelines Agent that will execute the extension. The Workbench CLI is available on the **Workbench for Eclipse** installation package. If you do not have the installation package, please  visit [https://support.bmc.com](https://support.bmc.com/). For Workbench CLI installation instructions, please refer to the [Workbench for Eclipse Install Guide](https://docs.bmc.com/docs/x/YE6wR).
 
 ### Configuring Host Connections
 	To use BMC AMI DevX Data Studio, you will need to point it to an installed Workbench Command Line Interface (CLI). The Workbench CLI will work with host connection(s) you also need to configure BMC AMI DevX Data Studio. For more information, see [Configuring for  Workbench CLI & Host Connections](https://github.com/bmc-compuware/common-configuration-azure-extension/blob/master/readme.md)

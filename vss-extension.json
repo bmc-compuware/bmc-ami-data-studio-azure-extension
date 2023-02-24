@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "bmc-ted-extension",
     "name": "BMC AMI DevX Data Studio Extension",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "publisher": "BMC",
     "public":false,
     "targets": [
