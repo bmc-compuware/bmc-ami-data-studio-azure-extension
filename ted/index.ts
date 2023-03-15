@@ -8,7 +8,7 @@ async function run() {
     tEDExecutionRunner.execteRunner(cliArguments);
 }
 catch (err: any) {
-    tl.setResult(tl.TaskResult.Failed, err.message);
+    tl.setResult(tl.TaskResult.Failed, err.stack);
 }
 }
 run();

@@ -8,9 +8,9 @@
     "category": "Utility",
     "author": "BMC Software",
     "version": {
-        "Major": 1,
+        "Major": 2,
         "Minor": 0,
-        "Patch": 5
+        "Patch": 1
     },
     "instanceNameFormat": "BMC AMI DevX Data Studio",
     "groups": [
@@ -540,7 +540,7 @@
         {
             "endpointId": "tfs:ems",
             "target": "linuxTopazWorkbenchCliHome",
-            "endpointUrl": "{{endpoint.url}}/_apis/ExtensionManagement/InstalledExtensions/BMC/common-config-extension/Data/Scopes/Default/Current/Collections/$settings/Documents/windows_CLI",
+            "endpointUrl": "{{endpoint.url}}/_apis/ExtensionManagement/InstalledExtensions/BMC/common-config-extension/Data/Scopes/Default/Current/Collections/$settings/Documents/linux_CLI",
             "resultSelector": "jsonpath:$.value"
         }],	
     "execution": {

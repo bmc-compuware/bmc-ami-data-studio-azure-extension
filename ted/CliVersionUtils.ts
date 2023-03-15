@@ -3,8 +3,8 @@
  */
 const fs = require('fs')
 var xml2js = require('xml2js');
-import { UtilityFunctions } from './UtilityFunctions';
-var comonConstant = require('./TEDConstants');
+import { UtilityFunctions } from './utilityFunctions';
+var comonConstant = require('./tedConstants');
 
 
 export class CliVersionUtils {

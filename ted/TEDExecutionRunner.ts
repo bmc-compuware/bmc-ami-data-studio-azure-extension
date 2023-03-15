@@ -1,10 +1,9 @@
 import tl = require('azure-pipelines-task-lib/task');
-import { ToolRunner } from 'azure-pipelines-task-lib/toolrunner';
 import { TEDExecutionBuilder } from './tedExecutionBuilder';
 import { ExecutionRunnerUtils } from './executionRunnerUtils';
-import { UtilityFunctions } from './UtilityFunctions';
+import { UtilityFunctions } from './utilityFunctions';
 import { spawn, exec } from 'child_process';
-var cliargList = require('./CliArguments');
+var cliargList = require('./cliArguments');
 
 /**
  * Class used to execute specifications on cli
