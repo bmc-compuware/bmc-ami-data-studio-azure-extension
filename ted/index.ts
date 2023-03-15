@@ -1,5 +1,5 @@
 import tl = require('azure-pipelines-task-lib/task');
-import {TEDExecutionRunner} from './TEDExecutionRunner';
+import {TEDExecutionRunner} from './tedExecutionRunner';
 
 async function run() {
   try {
@@ -8,7 +8,7 @@ async function run() {
     tEDExecutionRunner.execteRunner(cliArguments);
 }
 catch (err: any) {
-    tl.setResult(tl.TaskResult.Failed, err.message);
+    tl.setResult(tl.TaskResult.Failed, err.stack);
 }
 }
 run();

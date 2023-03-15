@@ -2,9 +2,9 @@
     "manifestVersion": 1,
     "id": "bmc-ted-extension",
     "name": "BMC AMI DevX Data Studio Extension",
-    "version": "1.0.0",
+    "version": "2.0.1",
     "publisher": "BMC",
-    "public":true,
+    "public":false,
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
@@ -15,20 +15,23 @@
         "Azure Pipelines"
     ],
     "icons": {
-        "default": "images/BMC_AMI_DevX_Data_Studio.png"        
-    },"repository": {
+        "default": "images/compuware.topaz.png"        
+    },
+    "scopes": [
+        "vso.extension.data"
+    ],"repository": {
       "type": "git",
-      "uri": "https://github.com/bmc-compuware/bmc-compuware-strobe-measurement-azure-extension"
+      "uri": "https://github.com/bmc-compuware/bmc-ami-data-studio-azure-extension"
   },
  "links": {
       "getstarted": {
-          "uri": "https://github.com/bmc-compuware/bmc-compuware-strobe-measurement-azure-extension/blob/master/readme.md"
+          "uri": "https://github.com/bmc-compuware/bmc-ami-data-studio-azure-extension/blob/master/readme.md"
       },
       "support": {
           "uri": "https://support.bmc.com"     
       },
       "license":{
-          "uri":"https://github.com/bmc-compuware/bmc-compuware-strobe-measurement-azure-extension/blob/master/LICENSE"
+          "uri":"https://github.com/bmc-compuware/bmc-ami-data-studio-azure-extension/blob/master/LICENSE"
       }
 
   },
