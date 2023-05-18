@@ -1,6 +1,6 @@
 ### Overview
 
-BMC AMI DevX Data Studio Extension is a data management product with automation to speed data extraction, privatization and loading. The extension allows Azure DevOps users to run ted specifications.
+BMC AMI DevX Data Studio Extension is a data management product with automation to speed data extraction, privatization and loading. The extension allows Azure DevOps users to run DevX Data Studio specifications.
 
 ### Prerequisites
 

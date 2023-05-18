@@ -2,20 +2,20 @@
     "manifestVersion": 1,
     "id": "bmc-ted-extension",
     "name": "BMC AMI DevX Data Studio Extension",
-    "version": "2.0.1",
+    "version": "2.0.4",
     "publisher": "BMC",
-    "public":false,
+    "public":true,
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
         }
     ],    
-    "description": "BMC AMI DevX Data Studio is a data management product with automation to speed data extraction, privatization and loading. The extension allows Azure Devops Users to run ted specifications.",
+    "description": "BMC AMI DevX Data Studio is a data management product with automation to speed data extraction, privatization and loading. The extension allows Azure Devops users to run ted specifications.",
     "categories": [
         "Azure Pipelines"
     ],
     "icons": {
-        "default": "images/compuware.topaz.png"        
+        "default": "images/common_config_icon.png"        
     },
     "scopes": [
         "vso.extension.data"
