@@ -1,0 +1,16 @@
+#The following files will be ignored while doing fortify scan
+**/*.gitignore
+**/*.slsignore
+/**/*.json
+/*.jpg
+/*.md
+/*.vsix
+/images/**
+/**/.vscode/**/*
+/*.json
+/*.css
+/src/*.css
+/src/*.txt
+/ted/*.json
+/ted/*.js
+LICENSE
