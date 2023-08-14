@@ -9,8 +9,6 @@
 /**/.vscode/**/*
 /*.json
 /*.css
-/src/*.css
-/src/*.txt
 /ted/*.json
 /ted/*.js
 LICENSE
